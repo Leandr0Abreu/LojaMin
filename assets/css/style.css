@@ -1,0 +1,134 @@
+/* ==========================================================================
+   Loja Minimalista — componentes
+   (Tailwind cuida do layout; aqui ficam só os componentes reutilizáveis)
+   ========================================================================== */
+
+:root {
+    --ink: #111111;
+    --paper: #F5F3EF;
+    --bone: #EAE7E1;
+    --sand: #D8D4CC;
+    --ash: #8A867E;
+    --rust: #B4472B;
+    --ok: #3F6B4F;
+}
+
+::selection { background: var(--ink); color: var(--paper); }
+
+:focus-visible { outline: 2px solid var(--ink); outline-offset: 3px; }
+
+/* Remove setinhas nativas de input number (usamos o stepper próprio) */
+input[type="number"] { -moz-appearance: textfield; appearance: textfield; }
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+
+/* ---------- Links de navegação ---------- */
+.nav-link { position: relative; transition: color .2s; color: #4a4741; }
+.nav-link:hover, .nav-link.is-active { color: var(--ink); }
+.nav-link.is-active::after {
+    content: ""; position: absolute; left: 0; right: 0; bottom: -6px; height: 1px; background: var(--ink);
+}
+
+/* ---------- Botões ---------- */
+.btn {
+    display: inline-flex; align-items: center; justify-content: center; gap: .5rem;
+    padding: .85rem 1.5rem; font-size: .8rem; font-weight: 600;
+    letter-spacing: .12em; text-transform: uppercase;
+    border: 1px solid var(--ink); transition: background .2s, color .2s, opacity .2s, transform .1s;
+    cursor: pointer; text-align: center;
+}
+.btn:active { transform: translateY(1px); }
+.btn-dark { background: var(--ink); color: var(--paper); }
+.btn-dark:hover { background: #2a2a2a; }
+.btn-line { background: transparent; color: var(--ink); }
+.btn-line:hover { background: var(--ink); color: var(--paper); }
+.btn:disabled, .btn[aria-busy="true"] { opacity: .55; cursor: not-allowed; }
+
+.eyebrow {
+    font-size: .72rem; font-weight: 600; letter-spacing: .24em; text-transform: uppercase; color: var(--ash);
+}
+
+/* ---------- Campos de formulário ---------- */
+.label { display: block; margin-bottom: .45rem; font-size: .72rem; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; }
+.input {
+    width: 100%; background: transparent; border: 1px solid var(--sand);
+    padding: .85rem 1rem; font-size: .95rem; color: var(--ink);
+    transition: border-color .2s, background .2s;
+}
+.input::placeholder { color: #aaa69d; }
+.input:hover { border-color: var(--ash); }
+.input:focus { outline: none; border-color: var(--ink); background: #fff; }
+.input[aria-invalid="true"] { border-color: var(--rust); }
+.field-error { margin-top: .4rem; font-size: .78rem; color: var(--rust); }
+
+/* ---------- Medidor de força da senha ---------- */
+.strength { display: grid; grid-template-columns: repeat(4, 1fr); gap: 4px; margin-top: .6rem; }
+.strength i { height: 3px; background: var(--sand); transition: background .25s; }
+.strength[data-level="1"] i:nth-child(-n+1) { background: var(--rust); }
+.strength[data-level="2"] i:nth-child(-n+2) { background: #C98A2B; }
+.strength[data-level="3"] i:nth-child(-n+3) { background: #7C8F3E; }
+.strength[data-level="4"] i:nth-child(-n+4) { background: var(--ok); }
+
+/* ---------- Stepper de quantidade ---------- */
+.qty { display: inline-flex; align-items: stretch; border: 1px solid var(--sand); background: transparent; }
+.qty button {
+    width: 2.5rem; font-size: 1.1rem; line-height: 1; transition: background .15s;
+}
+.qty button:hover:not(:disabled) { background: var(--bone); }
+.qty button:disabled { color: #bdb9b0; cursor: not-allowed; }
+.qty input {
+    width: 2.6rem; text-align: center; background: transparent; border: 0; font-weight: 600; font-size: .95rem; padding: .6rem 0;
+}
+.qty input:focus { outline: none; background: #fff; }
+
+/* ---------- Estoque ---------- */
+.dot { display: inline-block; height: .5rem; width: .5rem; border-radius: 999px; background: var(--ok); }
+.dot-poucas { background: #C98A2B; }
+.dot-ultimas { background: var(--rust); }
+
+.badge {
+    position: absolute; left: .75rem; top: .75rem; padding: .3rem .6rem;
+    font-size: .66rem; font-weight: 600; letter-spacing: .12em; text-transform: uppercase;
+}
+.badge-ultimas { background: var(--rust); color: #fff; }
+.badge-poucas  { background: var(--ink); color: var(--paper); }
+
+/* ---------- Card de produto ---------- */
+.card-img { overflow: hidden; aspect-ratio: 4 / 5; position: relative; }
+.card-img > * { transition: transform .6s cubic-bezier(.2, .7, .2, 1); }
+.product-card:hover .card-img > * { transform: scale(1.04); }
+
+.line-clamp-2 {
+    display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
+}
+
+/* ---------- Toast ---------- */
+.toast {
+    pointer-events: auto; background: var(--ink); color: var(--paper);
+    padding: .8rem 1.1rem; font-size: .85rem; box-shadow: 0 10px 30px rgba(0, 0, 0, .18);
+    animation: toast-in .3s ease both;
+}
+.toast.is-err { background: var(--rust); }
+.toast.is-leaving { animation: toast-out .25s ease both; }
+@keyframes toast-in  { from { opacity: 0; transform: translateY(10px); } }
+@keyframes toast-out { to   { opacity: 0; transform: translateY(10px); } }
+
+/* ---------- Modal (<dialog>) ---------- */
+dialog.modal {
+    margin: auto; width: min(92vw, 28rem); padding: 0; border: 0;
+    background: var(--paper); color: var(--ink);
+    box-shadow: 0 30px 80px rgba(0, 0, 0, .25);
+}
+dialog.modal[open] { animation: modal-in .28s cubic-bezier(.2, .7, .2, 1) both; }
+dialog.modal::backdrop { background: rgba(17, 17, 17, .55); backdrop-filter: blur(3px); }
+@keyframes modal-in { from { opacity: 0; transform: translateY(14px) scale(.98); } }
+
+/* ---------- Entrada suave ---------- */
+.reveal { animation: reveal .7s cubic-bezier(.2, .7, .2, 1) both; }
+.reveal-2 { animation-delay: .08s; }
+.reveal-3 { animation-delay: .16s; }
+@keyframes reveal { from { opacity: 0; transform: translateY(16px); } }
+
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; scroll-behavior: auto !important; }
+}
