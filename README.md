@@ -25,18 +25,3 @@ Este repositório contém um projeto de e-commerce básico desenvolvido como ati
 3. **Carrinho de Compras:**
    * Adição de produtos ao carrinho utilizando sessões do PHP.
    * Cálculo automático de subtotais e valor total da compra com base no banco de dados.
-
----
-
-## 📂 Estrutura de Pastas
-
-```text
-lojaroupa/
-│
-├── conexao.php             # Arquivo central de conexão com o banco de dados (PDO)
-├── cadastro.php            # Tela e lógica de cadastro de novos usuários
-├── login.php               # Tela e lógica de autenticação de usuários
-├── logout.php              # Encerramento da sessão do usuário
-├── index.php               # Vitrine principal (Listagem de produtos e estoque)
-├── adicionar_carrinho.php  # Lógica de controle do carrinho na sessão
-└── carrinho.php            # Tela de resumo do carrinho e valor total
